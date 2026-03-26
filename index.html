@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 400px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #38bdf8;
+            color: black;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0ea5e9;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .success {
+            color: lightgreen;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #22c55e;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>URL Shortener</h1>
+
+        <form action="/shorten" method="post">
+            <input type="text" name="url" placeholder="Enter your URL" required>
+            <button type="submit">Shorten</button>
+        </form>
+
+        <!-- Error Message -->
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <!-- Success + Result -->
+        {% if short_url %}
+            <div class="success">Short URL created successfully!</div>
+
+            <div class="result">
+                <a id="shortLink" href="{{ short_url }}">{{ short_url }}</a>
+                <br><br>
+                <button onclick="copyLink()">Copy</button>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyLink() {
+            const link = document.getElementById("shortLink").innerText;
+            navigator.clipboard.writeText(link);
+            alert("Copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
